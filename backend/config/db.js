@@ -1,21 +1,14 @@
-// config/db.js
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    // REMOVE the {} options block completely
+    const conn = await mongoose.connect(process.env.MONGODB_URI); 
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(`❌ MongoDB Connection Error: ${error.message}`);
     process.exit(1);
   }
 };
-
-mongoose.connection.on('disconnected', () => {
-  console.warn('⚠️  MongoDB disconnected');
-});
 
 module.exports = connectDB;
