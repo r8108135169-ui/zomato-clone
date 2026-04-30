@@ -1,9 +1,9 @@
 // server.js — FooDash API Entry Point
 require('dotenv').config();
+const connectDB = require('./config/db');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
