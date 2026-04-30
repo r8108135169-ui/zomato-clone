@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply font-body bg-surface-50 text-gray-900 antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-brand-500 hover:bg-brand-600 active:bg-brand-700 text-white font-semibold
+           px-5 py-2.5 rounded-xl transition-all duration-150 active:scale-95
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply border border-gray-200 hover:border-brand-400 hover:text-brand-600
+           text-gray-700 font-medium px-4 py-2 rounded-xl transition-all duration-150;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden;
+  }
+
+  .veg-dot {
+    @apply inline-flex items-center justify-center w-4 h-4 rounded-sm border-2 border-green-600;
+  }
+
+  .non-veg-dot {
+    @apply inline-flex items-center justify-center w-4 h-4 rounded-sm border-2 border-red-600;
+  }
+
+  .veg-dot::after {
+    content: '';
+    @apply block w-2 h-2 rounded-full bg-green-600;
+  }
+
+  .non-veg-dot::after {
+    content: '';
+    @apply block w-2 h-2 rounded-full bg-red-600;
+  }
+
+  /* Scrollbar hide utility */
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* Cart drawer overlay */
+.cart-overlay-enter { opacity: 0; }
+.cart-overlay-enter-active { opacity: 1; transition: opacity 200ms; }
+.cart-overlay-exit { opacity: 1; }
+.cart-overlay-exit-active { opacity: 0; transition: opacity 200ms; }
