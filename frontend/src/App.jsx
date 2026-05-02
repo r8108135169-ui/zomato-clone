@@ -6,7 +6,7 @@ import CartDrawer from './components/CartDrawer';
 import Home from './pages/Home';
 import RestaurantMenu from './pages/RestaurantMenu';
 import Checkout from './pages/Checkout';
-import Signup from './Signup'; 
+import Signup from './Signup';
 import Login from './Login';
 
 export default function App() {
