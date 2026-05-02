@@ -1,21 +1,23 @@
-// server.js — FooDash API Entry Point
+// server.js - FooDash API Entry Point
 require('dotenv').config();
 const connectDB = require('./config/db');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const errorHandler = require('./middleware/errorHandler');
-const authRoutes = require('./routes/auth'); // <== Add this here
+const authRoutes = require('./routes/auth');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+// Add this line below to fix the ReferenceError
+const PORT = process.env.PORT || 5000; 
 
-// ─── Database ────────────────────────────────────────────────────────────────
+// Database
 connectDB();
 
-// ─── Middleware ───────────────────────────────────────────────────────────────
+// Middleware
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
+// ... (rest of your existing middleware and routes)
 app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
 
