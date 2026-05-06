@@ -5,15 +5,26 @@ const Signup = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const url = `${import.meta.env.VITE_API_URL}/api/auth/signup`;
-      await axios.post(url, formData);
-      alert("Signup successful! You can now log in.");
-    } catch (err) {
-      alert(err.response?.data?.message || "Signup failed");
+  e.preventDefault();
+  try {
+    const url = `${import.meta.env.VITE_API_URL}/api/auth/signup`;
+    const response = await axios.post(url, formData);
+
+    // If the backend returns status 201 (Created)
+    if (response.status === 201) {
+      alert("Signed up successfully! 🎉 You can now log in.");
     }
-  };
+  } catch (err) {
+    // Axios puts the backend's JSON response in err.response.data
+    const serverMessage = err.response?.data?.message;
+
+    if (serverMessage === "User already exists") {
+      alert("User already exists! ⚠️ Please use a different email or Login.");
+    } else {
+      alert(serverMessage || "Signup failed. Please try again.");
+    }
+  }
+};
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh]">
