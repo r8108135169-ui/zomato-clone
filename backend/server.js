@@ -15,7 +15,10 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://zomato-frontend-uyzf.onrender.com',
+  credentials: true
+}));
 app.use(express.json({ limit: '10mb' }));
 // ... (rest of your existing middleware and routes)
 app.use(express.urlencoded({ extended: true }));
@@ -44,6 +47,10 @@ app.use((req, res) => {
 
 // ─── Global Error Handler ─────────────────────────────────────────────────────
 app.use(errorHandler);
+
+app.get('/', (req, res) => {
+  res.send('FooDash Backend is running!');
+});
 
 // ... existing app.listen code
 app.listen(PORT, () => {
