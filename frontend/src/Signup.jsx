@@ -11,24 +11,23 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Using your environment variable for the backend URL
+      // Backend URL from your environment variables
       const url = `${import.meta.env.VITE_API_URL}/api/auth/signup`;
       const response = await axios.post(url, formData);
 
-      // 1. Success Case: Backend returns 201 Created
+      // Status 201 means account was created successfully
       if (response.status === 201) {
         alert("Signed up successfully! 🎉 You can now log in.");
-        // Clear form after success
         setFormData({ name: '', email: '', password: '' });
       }
     } catch (err) {
-      // 2. Error Case: Access the specific message sent by your backend
-      const errorMessage = err.response?.data?.message || "Signup failed";
+      // Access the backend message: "User already exists" or "Server error"
+      const msg = err.response?.data?.message || "Signup failed";
 
-      if (errorMessage === "User already exists") {
+      if (msg === "User already exists") {
         alert("User already exists! ⚠️ Please use a different email or Login.");
       } else {
-        alert(errorMessage);
+        alert(`Error: ${msg}`);
       }
     }
   };
@@ -36,44 +35,15 @@ const Signup = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh]">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6">Create Account</h2>
-        
-        <input 
-          className="w-full mb-4 p-3 border rounded-xl" 
-          type="text" 
-          name="name"
-          placeholder="Name" 
-          required 
-          value={formData.name}
-          onChange={handleChange} 
-        />
-        
-        <input 
-          className="w-full mb-4 p-3 border rounded-xl" 
-          type="email" 
-          name="email"
-          placeholder="Email" 
-          required 
-          value={formData.email}
-          onChange={handleChange} 
-        />
-        
-        <input 
-          className="w-full mb-6 p-3 border rounded-xl" 
-          type="password" 
-          name="password"
-          placeholder="Password" 
-          required 
-          value={formData.password}
-          onChange={handleChange} 
-        />
-        
-        <button 
-          type="submit" 
-          className="w-full bg-brand-500 text-white p-3 rounded-xl font-bold hover:bg-brand-600 transition-colors"
-        >
-          Sign Up
-        </button>
+        <h2 className="text-2xl font-bold mb-6 text-center">Create Account</h2>
+        <div className="space-y-4">
+          <input className="w-full p-3 border rounded-xl" type="text" name="name" placeholder="Name" required value={formData.name} onChange={handleChange} />
+          <input className="w-full p-3 border rounded-xl" type="email" name="email" placeholder="Email" required value={formData.email} onChange={handleChange} />
+          <input className="w-full p-3 border rounded-xl" type="password" name="password" placeholder="Password" required value={formData.password} onChange={handleChange} />
+          <button type="submit" className="w-full bg-orange-500 text-white p-3 rounded-xl font-bold hover:bg-orange-600 transition-colors">
+            Sign Up
+          </button>
+        </div>
       </form>
     </div>
   );
