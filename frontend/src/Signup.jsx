@@ -11,23 +11,23 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Using the environment variable you set in Render
+      // Using your environment variable for the backend URL
       const url = `${import.meta.env.VITE_API_URL}/api/auth/signup`;
       const response = await axios.post(url, formData);
 
-      // If backend returns status 201 (Created)
+      // Backend returns 201 for new users
       if (response.status === 201) {
         alert("Signed up successfully! 🎉 You can now log in.");
-        setFormData({ name: '', email: '', password: '' }); // Clear form
+        setFormData({ name: '', email: '', password: '' });
       }
     } catch (err) {
-      // Axios puts the backend's "User already exists" message here
+      // Access the specific message "User already exists" from your backend
       const serverMessage = err.response?.data?.message || "Signup failed";
 
       if (serverMessage === "User already exists") {
         alert("User already exists! ⚠️ Please use a different email or Login.");
       } else {
-        // This will show "Server error" if the DB connection is still broken
+        // If it still says "Server error", the DB connection dropped again
         alert(`Error: ${serverMessage}`);
       }
     }
@@ -35,13 +35,13 @@ const Signup = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh]">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Create Account</h2>
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md border border-gray-100">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Create Account</h2>
         <div className="space-y-4">
-          <input className="w-full p-3 border rounded-xl" type="text" name="name" placeholder="Name" required value={formData.name} onChange={handleChange} />
-          <input className="w-full p-3 border rounded-xl" type="email" name="email" placeholder="Email" required value={formData.email} onChange={handleChange} />
-          <input className="w-full p-3 border rounded-xl" type="password" name="password" placeholder="Password" required value={formData.password} onChange={handleChange} />
-          <button type="submit" className="w-full bg-orange-600 text-white p-3 rounded-xl font-bold hover:bg-orange-700 transition-colors">
+          <input className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-orange-500 outline-none" type="text" name="name" placeholder="Full Name" required value={formData.name} onChange={handleChange} />
+          <input className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-orange-500 outline-none" type="email" name="email" placeholder="Email Address" required value={formData.email} onChange={handleChange} />
+          <input className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-orange-500 outline-none" type="password" name="password" placeholder="Password" required value={formData.password} onChange={handleChange} />
+          <button type="submit" className="w-full bg-orange-500 text-white p-3 rounded-xl font-bold hover:bg-orange-600 transition-all transform active:scale-95">
             Sign Up
           </button>
         </div>
