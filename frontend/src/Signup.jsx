@@ -11,23 +11,24 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Backend URL from your environment variables
+      // Using the environment variable you set in Render
       const url = `${import.meta.env.VITE_API_URL}/api/auth/signup`;
       const response = await axios.post(url, formData);
 
-      // Status 201 means account was created successfully
+      // If backend returns status 201 (Created)
       if (response.status === 201) {
         alert("Signed up successfully! 🎉 You can now log in.");
-        setFormData({ name: '', email: '', password: '' });
+        setFormData({ name: '', email: '', password: '' }); // Clear form
       }
     } catch (err) {
-      // Access the backend message: "User already exists" or "Server error"
-      const msg = err.response?.data?.message || "Signup failed";
+      // Axios puts the backend's "User already exists" message here
+      const serverMessage = err.response?.data?.message || "Signup failed";
 
-      if (msg === "User already exists") {
+      if (serverMessage === "User already exists") {
         alert("User already exists! ⚠️ Please use a different email or Login.");
       } else {
-        alert(`Error: ${msg}`);
+        // This will show "Server error" if the DB connection is still broken
+        alert(`Error: ${serverMessage}`);
       }
     }
   };
@@ -40,7 +41,7 @@ const Signup = () => {
           <input className="w-full p-3 border rounded-xl" type="text" name="name" placeholder="Name" required value={formData.name} onChange={handleChange} />
           <input className="w-full p-3 border rounded-xl" type="email" name="email" placeholder="Email" required value={formData.email} onChange={handleChange} />
           <input className="w-full p-3 border rounded-xl" type="password" name="password" placeholder="Password" required value={formData.password} onChange={handleChange} />
-          <button type="submit" className="w-full bg-orange-500 text-white p-3 rounded-xl font-bold hover:bg-orange-600 transition-colors">
+          <button type="submit" className="w-full bg-orange-600 text-white p-3 rounded-xl font-bold hover:bg-orange-700 transition-colors">
             Sign Up
           </button>
         </div>
